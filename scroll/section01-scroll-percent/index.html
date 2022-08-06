@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-compatible" content="chrome=1,IE=edge" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <link rel="stylesheet" type="text/css" href="../library/css/common.css" />
+  </head>
+  <style type="text/css">
+    .com_tit {
+      padding: 100px 0 80px;
+      font-size: 70px;
+      text-align: center;
+    }
+
+    .com_txt {
+      max-width: 70%;
+      margin: 0 auto;
+      font-size: 30px;
+      text-align: center;
+    }
+
+    .sec01 {
+      background: #ddd;
+    }
+
+    .sec01 .content {
+      font-size: 170px;
+    }
+
+    .sec01 .content .progress {
+      position: fixed;
+      left: 50%;
+      top: 500px;
+      width: 70%;
+      height: 100px;
+      margin-left: -35%;
+      border: 1px solid #222;
+      text-align: center;
+    }
+
+    .sec01 .content .progress .bar {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background-color: #111;
+    }
+
+    .sec01 .content .progress .txt {
+      font-size: 30px;
+    }
+  </style>
+
+  <body>
+    <div class="wrap">
+      <section class="sec01">
+        <h2 class="com_tit">스크롤 백분율 구하는 방법</h2>
+        <p class="com_txt">
+          뒤에 나오는 예제에서 반복 학습을 계속합니다. 부담없이 학습하세요 :)
+        </p>
+        <article class="content">
+          <div class="progress">
+            <span class="bar"></span>
+            <p class="txt">0%</p>
+          </div>
+          가<br />
+          나<br />
+          다<br />
+          라<br />
+          마<br />
+          바<br />
+          사<br />
+          아<br />
+          자<br />
+          차<br />
+          카<br />
+          타<br />
+          파<br />
+          하
+        </article>
+      </section>
+    </div>
+    <script type="text/javascript">
+      window.addEventListener("load", function () {
+        const progressBarEl = document.querySelector(".progress .bar");
+        const progressTxtEl = document.querySelector(".progress .txt");
+
+        let winScrollTop; // 스크롤 위치(높이) 값
+        let scrollHeight; // 스크롤 대상의 높이
+        let scrollRealHeight; // 스크롤 거리
+        let scrollPercent; // 스크롤 진행 상태 0 ~ 1
+        let scrollRealPercent; // 스크롤 진행 상태 백분율 0 ~ 100;
+
+        function setProperty() {
+          winScrollTop = window.pageYOffset;
+          scrollHeight = document.body.offsetHeight;
+          scrollRealHeight = scrollHeight - window.innerHeight;
+          scrollPercent = winScrollTop / scrollRealHeight;
+          scrollRealPercent = scrollPercent * 100;
+        }
+
+        function changeProgressBar() {
+          progressBarEl.style.width = `${scrollRealPercent}%`;
+        }
+
+        function changeProgressText() {
+          progressTxtEl.innerText = `${Math.floor(scrollRealPercent)}%`;
+        }
+
+        function render() {
+          setProperty();
+          changeProgressBar();
+          changeProgressText();
+        }
+
+        window.addEventListener("scroll", function () {
+          render();
+        });
+
+        render();
+      });
+    </script>
+  </body>
+</html>
