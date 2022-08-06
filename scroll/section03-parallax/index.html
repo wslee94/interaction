@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../library/css/common.css" />
+  </head>
+  <style type="text/css">
+    /* 깡 캐릭터 모션 그래픽 */
+    .motion_ggang {
+      position: fixed;
+      left: 10%;
+      top: 100px;
+      z-index: 30;
+      width: 300px;
+      will-change: transform;
+    }
+
+    .motion_ggang img {
+      width: 100%;
+    }
+
+    .motion_ggang figure {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      margin-left: -150px;
+      width: 300px;
+      font-size: 0;
+    }
+
+    .motion_ggang .ch_body {
+      z-index: 20;
+    }
+
+    .motion_ggang .ch_hand_right {
+      z-index: 10;
+      transform-origin: 199px 163px;
+    }
+
+    .motion_ggang .ch_hand_right {
+      animation-name: hand_move;
+      animation-duration: 0.8s;
+      /*한번 재생걸리는시간*/
+      animation-delay: 0s;
+      /*애니메이션 지연*/
+      animation-direction: alternate;
+      /* 애니메이션 재생방향 alternate :순방향, reverse: 역방향*/
+      animation-iteration-count: infinite;
+      /* 애니메이션 재생횟수 infinite 무한*/
+      animation-play-state: running;
+      /* 애니메이션 재생여부  running :재생 (기본값), paused(애니메이션정지)*/
+      animation-timing-function: linear;
+      /*애니메이션 가속도 설정 linear, ease, ease-in, ease-out, custom 등*/
+      animation-fill-mode: both;
+    }
+
+    @keyframes hand_move {
+      0% {
+        transform: rotate(-14deg);
+      }
+
+      100% {
+        transform: rotate(4deg);
+      }
+    }
+
+    /* 스크롤 배경 만들기 */
+    .motion_area {
+      position: relative;
+      width: 100%;
+      height: 6000px;
+      background-color: #000;
+    }
+
+    .motion_area .bg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    /* 아침 */
+    .motion_area .bg.one {
+      background-image: url("images/motion_sky1.gif");
+    }
+
+    /* 점심 */
+    .motion_area .bg.two {
+      background-image: url("images/motion_sky2.gif");
+    }
+
+    /* 이른저녁 */
+    .motion_area .bg.three {
+      background-image: url("images/motion_sky3.gif");
+    }
+
+    /* 밤 */
+    .motion_area .bg.four {
+      background-image: url("images/motion_sky4.gif");
+    }
+
+    .motion_area .bg.active {
+      opacity: 1;
+    }
+
+    .motion_area .motion_rope {
+      position: fixed;
+      left: 10%;
+      top: 0;
+      z-index: 20;
+      width: 20px;
+      height: 100%;
+      background-image: url("images/motion_rope.png");
+      background-repeat: repeat-y;
+      background-position: 50% 0;
+      background-size: 20px;
+    }
+
+    .motion_area .motion_moon {
+      visibility: hidden;
+      position: fixed;
+      right: 100px;
+      top: 100px;
+      z-index: 20;
+      width: 200px;
+      opacity: 0;
+      transform: translateY(-100px);
+      -webkit-transform: translateY(-100px);
+      transition: 1s;
+    }
+
+    .motion_area .motion_moon.active {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0px);
+      -webkit-transform: translateY(0px);
+    }
+
+    @media screen and (max-width: 767px) {
+      .motion_area .bg {
+        background-size: 400px;
+      }
+      .motion_area .motion_moon {
+        right: 20px;
+        width: 100px;
+      }
+      .motion_ggang {
+        top: calc(100vh - 473px);
+      } /* 모바일에서는 스크롤 속도가 빠르기 때문에 패럴요소가 움직이는 거리가 길경우 떨림 현상이 생길 수 있으므로 픽스드 처리합니다. */
+    }
+  </style>
+
+  <body>
+    <div class="wrap">
+      <div class="motion_area">
+        <div class="bg one active"></div>
+        <div class="bg two"></div>
+        <div class="bg three"></div>
+        <div class="bg four"></div>
+        <div class="motion_rope"></div>
+        <div class="motion_ggang">
+          <figure class="ch_body">
+            <img src="images/motion_body2.png" />
+          </figure>
+          <figure class="ch_hand_right">
+            <img src="images/motion_hand_right.png" />
+          </figure>
+        </div>
+        <figure class="motion_moon">
+          <img src="images/motion_moon.png" />
+        </figure>
+      </div>
+    </div>
+  </body>
+</html>
+<script type="text/javascript">
+  window.addEventListener("load", function () {
+    const motionAreaEl = document.querySelector(".motion_area");
+    const motionGGangEl = document.querySelector(".motion_ggang");
+    const bgEls = document.querySelectorAll(".bg");
+    const moonEl = document.querySelector(".motion_moon");
+
+    let winScrollTop; // 스크롤 위치(높이) 값
+    let scrollHeight; // 스크롤 대상의 높이
+    let scrollRealHeight; // 스크롤 거리
+    let scrollPercent; // 스크롤 진행 상태 0 ~ 1
+    let scrollRealPercent; // 스크롤 진행 상태 0 ~ 100
+    const parallaxDistance = 110; // 패럴렉스 총 진행 거리
+    let parallaxMove; // 패럴렉스 진행 거리
+
+    function setProperty() {
+      winScrollTop = window.pageYOffset;
+      scrollHeight = motionAreaEl.offsetHeight;
+      scrollRealHeight = scrollHeight - window.innerHeight;
+      scrollPercent = winScrollTop / scrollRealHeight;
+      scrollRealPercent = scrollPercent * 100;
+      parallaxMove = parallaxDistance * scrollPercent;
+    }
+
+    function parallax() {
+      motionGGangEl.style.transform = `translateY(${parallaxMove}px)`;
+    }
+
+    function changeBackground() {
+      if (scrollRealPercent <= 25) {
+        bgEls.forEach((n) => n.classList.remove("active"));
+        bgEls[0].classList.add("active");
+      } else if (scrollRealPercent > 25 && scrollRealPercent <= 50) {
+        bgEls.forEach((n) => n.classList.remove("active"));
+        bgEls[1].classList.add("active");
+      } else if (scrollRealPercent > 50 && scrollRealPercent <= 75) {
+        bgEls.forEach((n) => n.classList.remove("active"));
+        bgEls[2].classList.add("active");
+        moonEl.classList.remove("active");
+      } else {
+        bgEls.forEach((n) => n.classList.remove("active"));
+        bgEls[3].classList.add("active");
+        moonEl.classList.add("active");
+      }
+    }
+
+    function render() {
+      setProperty();
+      parallax();
+      changeBackground();
+    }
+
+    window.addEventListener("scroll", function () {
+      render();
+    });
+
+    window.addEventListener("resize", function () {
+      render();
+    });
+
+    render();
+  });
+</script>
