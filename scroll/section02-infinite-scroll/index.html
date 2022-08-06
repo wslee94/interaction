@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-compatible" content="chrome=1,IE=edge" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../library/css/common.css" />
+  </head>
+  <style type="text/css">
+    .com_tit {
+      padding: 100px 0 80px;
+      font-size: 70px;
+      text-align: center;
+    }
+
+    .sc_infinity .list:after {
+      clear: both;
+      display: block;
+      content: "";
+    }
+
+    .sc_infinity .list li {
+      float: left;
+      width: 25%;
+    }
+
+    .sc_infinity .list li figure {
+      padding: 10px;
+    }
+
+    .footer {
+      height: 200px;
+      background-color: #ddd;
+    }
+
+    .footer p {
+      padding: 50px 20px;
+    }
+  </style>
+
+  <body>
+    <div class="wrap">
+      <section class="sec01">
+        <h2 class="com_tit">INFINITE SCROLL</h2>
+        <article class="sc_infinity">
+          <ul class="list">
+            <li>
+              <figure>
+                <img src="images/1.jpg" />
+              </figure>
+            </li>
+            <li>
+              <figure>
+                <img src="images/2.jpg" />
+              </figure>
+            </li>
+            <li>
+              <figure>
+                <img src="images/3.jpg" />
+              </figure>
+            </li>
+            <li>
+              <figure>
+                <img src="images/1.jpg" />
+              </figure>
+            </li>
+            <li>
+              <figure>
+                <img src="images/2.jpg" />
+              </figure>
+            </li>
+            <li>
+              <figure>
+                <img src="images/3.jpg" />
+              </figure>
+            </li>
+          </ul>
+        </article>
+        <div class="footer">
+          <p>FOOTER</p>
+        </div>
+      </section>
+    </div>
+    <script type="text/javascript">
+      window.addEventListener("load", function () {
+        const listEl = document.querySelector(".sc_infinity .list");
+        const footerEl = document.querySelector(".footer");
+        const breakCount = 10; // 최대 10번 까지 호출
+        let listCount = 0; // 리스트 호출 카운트
+
+        let winScrollTop; // 스크롤 위치(높이) 값
+        let scrollHeight; // 스크롤 대상의 높이
+        let scrollRealHeight; // 스크롤 거리
+        let onTop; // 리스트를 불러오는 경계(높이) 값
+
+        function setProperty() {
+          winScrollTop = window.pageYOffset;
+          scrollHeight = document.body.offsetHeight;
+          scrollRealHeight = scrollHeight - window.innerHeight;
+          onTop = scrollRealHeight - footerEl.offsetHeight;
+          /*
+            인피니트 스크롤 구현 방법
+            1. 전체 스크롤 거리에서 footer의 높이 값을 뺀다. -> onTop
+            2. 현재 스크롤 위치(높이) 값이 onTop 보다 커지면 리스트를 불러온다.
+               그 후, 전체 스크롤 거리가 늘어난다.
+
+            1, 2 반복
+          */
+        }
+
+        function getList() {
+          listCount++;
+          let list;
+
+          if (listCount < breakCount) {
+            list = `
+            <li><figure><img src="images/1.jpg"></figure></li>
+            <li><figure><img src="images/2.jpg"></figure></li>
+            <li><figure><img src="images/3.jpg"></figure></li>
+            `;
+            return list;
+          }
+          return null;
+        }
+
+        function callList() {
+          if (winScrollTop > onTop) {
+            const data = getList();
+            if (data) {
+              const divEl = document.createElement("div");
+              divEl.innerHTML = data;
+              const arr = Array.from(divEl.children);
+              arr.forEach((n) => listEl.appendChild(n));
+            }
+          }
+        }
+
+        function render() {
+          setProperty();
+          callList();
+        }
+
+        window.addEventListener("scroll", function () {
+          render();
+        });
+
+        render();
+      });
+    </script>
+  </body>
+</html>
