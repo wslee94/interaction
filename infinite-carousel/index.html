@@ -1,57 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-    />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
-    <script defer src="main.js"></script>
-  </head>
-  <body>
-    <div id="carousel-container">
-      <div>
-        <ul id="carousel" class="animate">
-          <li class="slide animate">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1014830/nature-1.jpg"
-            />
-          </li>
-          <li class="slide animate">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1014830/nature-2.jpg"
-            />
-          </li>
-          <li class="slide animate">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1014830/nature-3.jpg"
-            />
-          </li>
-          <li class="slide animate">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1014830/nature-4.jpg"
-            />
-          </li>
-          <li class="slide animate">
-            <img
-              src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1014830/nature-5.jpg"
-            />
-          </li>
-        </ul>
-      </div>
-      <div id="controls">
-        <span id="prev"
-          ><img
-            src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1014830/prev.png"
-        /></span>
-        <span id="next"
-          ><img
-            src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1014830/next.png"
-        /></span>
-      </div>
-    </div>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    ul,
+    li {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .wrap_shorts {
+      position: relative;
+      width: 1160px;
+      margin: 0 auto;
+    }
+
+    .list_shorts {
+      position: relative;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .item_shorts {
+      position: relative;
+      display: inline-block;
+      margin: 0 8px;
+      border-radius: 15px;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .item_shorts::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .item_shorts.active::after,
+    .item_shorts:hover::after {
+      content: none;
+    }
+
+    .shorts {
+      display: block;
+    }
+
+    .shorts.vertical {
+      width: 191px;
+      height: 340px;
+    }
+
+    .shorts.horizontal {
+      width: 604px;
+      height: 340px;
+    }
+
+    .animate {
+      -webkit-transition-duration: 0.5s;
+      -moz-transition-duration: 0.5s;
+      -o-transition-duration: 0.5s;
+      transition-duration: 0.5s;
+      -webkit-transition-property: -webkit-transform;
+      -moz-transition-property: -moz-transform;
+      -o-transition-property: -o-transform;
+      transition-property: transform;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="wrap_shorts">
+    <button class="btn_prev">이전</button>
+    <button class="btn_next">다음</button>
+    <ul style="margin-top: 10px;" class="list_shorts"></ul>
+  </div>
+  <script>
+    // li 태그 동적 생성 구문 (뷰에서는 사용하지 않을 예정)
+    function createLiElements(shortsInfo) {
+      const listShortsEl = document.querySelector('.list_shorts')
+      for (let i = 0; i < shortsInfo.length; i++) {
+        const liEl = document.createElement("li");
+        const shortsEl = document.createElement("div"); // short iframe으로 변경될 태그 생성
+        liEl.setAttribute("class", "item_shorts")
+        shortsEl.setAttribute("id", `shorts${i}`);
+        shortsEl.setAttribute("class", "shorts");
+        liEl.appendChild(shortsEl);
+        listShortsEl.appendChild(liEl);
+      }
+    }
+
+    const shortsInfo = [
+      { mode: "v", link: "ta7ylLueRiA" },
+      { mode: "v", link: "ta7ylLueRiA" },
+      { mode: "v", link: "ta7ylLueRiA" },
+      { mode: "v", link: "ta7ylLueRiA" },
+      { mode: "v", link: "ta7ylLueRiA" },
+      { mode: "v", link: "ta7ylLueRiA" },
+      { mode: "v", link: "ta7ylLueRiA" },
+      { mode: "v", link: "ta7ylLueRiA" },
+      { mode: "v", link: "ta7ylLueRiA" },
+      { mode: "v", link: "ta7ylLueRiA" },
+      { mode: "v", link: "ta7ylLueRiA" },
+      { mode: "v", link: "ta7ylLueRiA" },
+      { mode: "v", link: "ta7ylLueRiA" },
+      { mode: "v", link: "ta7ylLueRiA" },
+      { mode: "v", link: "ta7ylLueRiA" },
+    ];
+    shortsInfo.unshift(shortsInfo.pop()); // 배열의 마지막 쇼츠를 처음으로 이동 (인피니트 캐로셀 구현을 위해)
+    shortsLength = shortsInfo.length;
+    createLiElements(shortsInfo)
+
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    function onYouTubeIframeAPIReady() {
+      const slideEls = document.querySelectorAll('.item_shorts')
+      const shortsEls = document.querySelectorAll('.shorts');
+      const prevBtnEl = document.querySelector('.btn_prev')
+      const nextBtnEl = document.querySelector('.btn_next')
+
+      const shortsInstances = [];
+      
+      // 캐로셀
+      const moveOffsets = [];
+      const currTranslateX = [];
+      const transitionDuration = 500;
+      let translationComplete = true;
+      let prevPlayIndex = 0; 
+      let currPlayIndex = 1;
+      let outerPlayIndex = 0;
+      let moveOffsetSum = 0;
+
+      function transitionCompleted() {
+        translationComplete = true;
+      }
+      
+      function bindTransitionEvent() {
+        slideEls.forEach(n => {
+          n.addEventListener("transitionend", transitionCompleted);
+          n.addEventListener("webkitTransitionEnd", transitionCompleted);
+          n.addEventListener("oTransitionEnd", transitionCompleted);
+          n.addEventListener("MSTransitionEnd", transitionCompleted);
+        });
+      }
+
+      function initMoveOffset() {
+        slideEls.forEach((n, i) => {
+          const style = window.getComputedStyle(n);
+          const margin = parseFloat(style.marginLeft) + parseFloat(style.marginRight)
+          moveOffsets.push(n.offsetWidth + margin)
+          moveOffsetSum = moveOffsets.reduce((prev, curr) => prev + curr, 0);
+        })
+      }
+
+      function initCurrTranslateX() {
+        slideEls.forEach((n, i) => {
+          n.style.transform = `translateX(${-moveOffsets[0]}px)`
+          setTimeout(() => n.classList.add('animate'), transitionDuration)
+          currTranslateX[i] = -moveOffsets[0];
+        })
+      }
+
+      function movePrevShorts() {
+        if (!translationComplete) return;
+        translationComplete = false;
+
+        prevPlayIndex = currPlayIndex;
+        currPlayIndex--;
+        if(currPlayIndex < 0) currPlayIndex = shortsLength - 1;
+
+        for (let i = 0; i < shortsLength; i++) {
+          slideEls[i].style.opacity = "1";
+          slideEls[i].style.transform = `translateX(${currTranslateX[i] + moveOffsets[currPlayIndex]}px)`;
+          currTranslateX[i] = currTranslateX[i] + moveOffsets[currPlayIndex];
+        }
+
+        outerPlayIndex--;
+        if(outerPlayIndex < 0) outerPlayIndex = shortsLength - 1;
+
+        const outerSlideEl = slideEls[outerPlayIndex];
+        outerSlideEl.style.opacity = "0";
+        outerSlideEl.style.transform = `translateX(${currTranslateX[outerPlayIndex] - moveOffsetSum}px)`;
+        currTranslateX[outerPlayIndex] = currTranslateX[outerPlayIndex] - moveOffsetSum;
+        shortsInstances[currPlayIndex].playVideo();
+      }
+
+      function moveNextShorts() {
+        if (!translationComplete) return;
+        translationComplete = false;
+
+        for (let i = 0; i < shortsLength; i++) {
+          slideEls[i].style.opacity = "1";
+          slideEls[i].style.transform = `translateX(${currTranslateX[i] - moveOffsets[currPlayIndex]}px)`;
+          currTranslateX[i] = currTranslateX[i] - moveOffsets[currPlayIndex];
+        }
+
+        prevPlayIndex = currPlayIndex;
+        currPlayIndex = (currPlayIndex + 1) % shortsLength;
+
+        const outerSlideEl = slideEls[outerPlayIndex];
+        outerSlideEl.style.opacity = "0";
+        outerSlideEl.style.transform = `translateX(${currTranslateX[outerPlayIndex] + moveOffsetSum}px)`;
+        currTranslateX[outerPlayIndex] = currTranslateX[outerPlayIndex] + moveOffsetSum;
+
+        outerPlayIndex = (outerPlayIndex + 1) % shortsLength;
+        shortsInstances[currPlayIndex].playVideo();
+      }
+
+      function moveClickedShorts(clickedIndex) {
+        let gap = 0;
+        if(clickedIndex > currPlayIndex) {
+          gap = clickedIndex - currPlayIndex;
+        } else {
+          gap = shortsLength - currPlayIndex + clickedIndex;
+        }
+
+        let moveOffsetSumBetween = 0;
+        for(let i = 0; i < gap; i++) {
+          moveOffsetSumBetween += moveOffsets[(currPlayIndex + i) % shortsLength];
+        }
+
+        if (!translationComplete) return;
+        translationComplete = false;
+
+        for (let i = 0; i < shortsLength; i++) {
+          slideEls[i].style.opacity = "1";
+          slideEls[i].style.transform = `translateX(${currTranslateX[i] - moveOffsetSumBetween}px)`;
+          currTranslateX[i] = currTranslateX[i] - moveOffsetSumBetween;
+        }
+
+        setTimeout(() => {
+          for(let i = 0; i < gap; i++) {
+            slideEls[outerPlayIndex].style.opacity = "0";
+            slideEls[outerPlayIndex].style.transform = `translateX(${currTranslateX[outerPlayIndex] + moveOffsetSum}px)`;
+            currTranslateX[outerPlayIndex] = currTranslateX[outerPlayIndex] + moveOffsetSum;
+            outerPlayIndex = (outerPlayIndex + 1) % shortsLength;
+          }
+        }, transitionDuration)
+
+        prevPlayIndex = currPlayIndex;
+        currPlayIndex = clickedIndex;
+      }
+
+      function stopOtherShorts(shortsInstances, currIndex) {
+        shortsInstances[prevPlayIndex].stopVideo();
+        slideEls[prevPlayIndex].classList.remove("active");
+        slideEls[currIndex].classList.add("active");
+      }
+
+      shortsEls.forEach((n, i) => {
+        const shortsInstance = new YT.Player(n.getAttribute("id"), {
+          videoId: shortsInfo[i].link,
+          playerVars: {
+            controls: 0,
+            rel: 0,
+            disablekb: 1
+          },
+          events: {
+            onReady(e) {
+              e.target.mute(); // 음소거
+              if (i === currPlayIndex) e.target.playVideo(); // 첫번째 영상 자동 재생
+            },
+            onStateChange(e) {
+              switch(e.data) {
+                case YT.PlayerState.PLAYING: 
+                  if(currPlayIndex !== i) moveClickedShorts(i)
+                  stopOtherShorts(shortsInstances, i)
+                  break;
+                case YT.PlayerState.ENDED: 
+                  moveNextShorts();
+                  break;
+                default: 
+                  break;
+              }
+            }
+          }
+        })
+
+        shortsInfo[i].mode === "v" ? shortsInstance.i.classList.add("vertical") : shortsInstance.i.classList.add("horizontal");
+        shortsInstances.push(shortsInstance);
+      });
+
+      prevBtnEl.addEventListener('click', movePrevShorts);
+      nextBtnEl.addEventListener('click', moveNextShorts);
+
+      bindTransitionEvent()
+      initMoveOffset() 
+      initCurrTranslateX()
+
+    }
+  </script>
+</body>
 </html>
