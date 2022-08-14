@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="library/css/common.css" />
+  </head>
+  <style type="text/css">
+    /* common */
+    .wrap {
+      position: relative;
+      overflow: hidden;
+    }
+    .inner {
+      max-width: 1100px;
+      height: 100%;
+      margin: 0 auto;
+    }
+    .com_tit01 {
+      font-family: "NotoB";
+      font-size: 60px;
+      color: #fff;
+      text-align: center;
+    }
+    .com_txt01 {
+      max-width: 70%;
+      margin: 0 auto;
+      font-family: "NotoR";
+      font-size: 24px;
+      color: #fff;
+      text-align: center;
+    }
+    .header_wrap {
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+      height: 70px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .header_wrap .logo {
+      margin-top: 15px;
+      padding-left: 20px;
+      font-size: 24px;
+      color: #fff;
+    }
+    .tb_row {
+      display: table;
+      width: 100%;
+      height: 100%;
+    }
+    .tb_row .tb_cell {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    /* 배경 오버랩 효과 */
+    .section_overlap {
+      overflow: hidden;
+      position: relative;
+      padding-top: 100px;
+      padding-bottom: 80px;
+    }
+
+    .section_overlap .overlap_box .tit_wrap {
+      position: relative;
+      z-index: 60;
+      padding-bottom: 50px;
+    }
+
+    .section_overlap .overlap_box .img_device {
+      position: relative;
+      z-index: 50;
+      width: 300px;
+      margin: 0 auto;
+    }
+
+    .bg_change {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      transition: width;
+      transition-duration: 1s;
+    }
+
+    .bg_change.color01 {
+      z-index: 40;
+      background-color: black;
+      transition-delay: 1s;
+    }
+    .section_overlap.active .bg_change.color01 {
+      width: 0%;
+    }
+
+    .bg_change.color02 {
+      z-index: 30;
+      background-color: #272727;
+      transition-delay: 2s;
+    }
+    .section_overlap.active .bg_change.color02 {
+      width: 0%;
+    }
+
+    .bg_change.color03 {
+      z-index: 20;
+      background-color: #c2bada;
+      transition-delay: 3s;
+    }
+    .section_overlap.active .bg_change.color03 {
+      width: 0%;
+    }
+
+    .bg_change.color04 {
+      z-index: 10;
+      background-color: black;
+    }
+  </style>
+
+  <body>
+    <div class="wrap">
+      <header class="header_wrap">
+        <div class="logo">GGANG CODING</div>
+      </header>
+      <section class="section_overlap">
+        <article class="overlap_box">
+          <div class="tit_wrap">
+            <h2 class="com_tit01">OVERLAP BACKGROUND</h2>
+            <p class="com_txt01">배경으로 강조하는 상품이미지</p>
+          </div>
+          <figure class="img_device">
+            <img src="images/img_iphone01.png" />
+          </figure>
+          <div class="bg_change color01"></div>
+          <div class="bg_change color02"></div>
+          <div class="bg_change color03"></div>
+          <div class="bg_change color04"></div>
+        </article>
+      </section>
+    </div>
+    <script type="text/javascript">
+      window.addEventListener("load", function () {
+        const sectionEl = document.querySelector(".section_overlap");
+        setTimeout(function () {
+          sectionEl.classList.add("active");
+        }, 200);
+      });
+    </script>
+  </body>
+</html>
