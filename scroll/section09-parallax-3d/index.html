@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../library/css/common.css" />
+  </head>
+  <style type="text/css">
+    /* common */
+    .wrap {
+      position: relative;
+    }
+    .wrap::after {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      content: "";
+    }
+    .inner {
+      max-width: 1100px;
+      height: 100%;
+      margin: 0 auto;
+    }
+    .com_tit01 {
+      font-family: "NotoB";
+      font-size: 120px;
+      color: #fff;
+      text-align: center;
+    }
+    .com_txt01 {
+      max-width: 70%;
+      margin: 0 auto;
+      font-family: "NotoR";
+      font-size: 32px;
+      color: #fff;
+      text-align: center;
+    }
+
+    /* main */
+
+    /* 타이틀 */
+    .fix_tit {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      z-index: 100;
+      font-family: "NotoB";
+      font-size: 80px;
+      line-height: 1;
+      color: #fff;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      opacity: 0.6;
+    }
+    .fix_tit span {
+      position: absolute;
+      right: 0;
+      top: -30px;
+      font-size: 30px;
+      font-family: "NotoM";
+      border-bottom: 3px solid rgba(255, 255, 255, 0.6);
+    }
+    .fix_tit.black {
+      color: #000;
+      transition: color 0.5s;
+    }
+    .fix_tit.black span {
+      border-color: rgba(000, 000, 000, 0.6);
+    }
+
+    /* 섹션, 네비게이션 */
+    .ggang_section {
+      overflow: hidden;
+      height: 1440px;
+      background-size: cover;
+    }
+    .ggang_section.fixed {
+      background-attachment: fixed;
+    }
+
+    .nav_list {
+      position: fixed;
+      right: 50px;
+      top: 50%;
+      z-index: 1000;
+      transform: translateY(-50%);
+      -webkit-transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+    }
+    .nav_list li {
+      margin-bottom: 15px;
+    }
+    .nav_list li a {
+      position: relative;
+      display: block;
+      color: #fff;
+      transition: 0.5s;
+      -webkit-transition: 0.5s;
+      -moz-transition: 0.5s;
+      -o-transition: 0.5s;
+      -ms-transition: 0.5s;
+    }
+    .nav_list li a .fa {
+      position: absolute;
+      left: -20px;
+      top: 5px;
+      width: 16px;
+      height: 16px;
+      background-image: url("images/icon_p.png");
+      background-size: cover;
+      background-position: 0px 0px;
+      transition: transform 0.5s;
+      -webkit-transition: transform 0.5s;
+      -moz-transition: transform 0.5s;
+      -o-transition: transform 0.5s;
+      -ms-transition: transform 0.5s;
+    }
+    .nav_list li a.active {
+      color: #f0582b;
+    }
+    .nav_list li a.active .fa {
+      background-position: 0px 16px;
+      transform: rotate(360deg);
+    }
+    .nav_list li a:hover,
+    .nav_list li a:focus {
+      color: #f0582b;
+      text-decoration: none;
+    }
+
+    .cube_wrap {
+      perspective: 600px;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      z-index: 20;
+      width: 400px;
+      height: 400px;
+      transform: translate(-50%, -50%);
+    }
+
+    .cube_box {
+      position: relative;
+      height: 100%;
+      transform-style: preserve-3d;
+    }
+
+    .cube_face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+    }
+
+    .cube_face.front {
+      transform: rotateY(0) translateZ(200px);
+    }
+
+    .cube_face.back {
+      transform: rotateY(180deg) translateZ(200px);
+    }
+
+    .cube_face.left {
+      transform: rotateY(-90deg) translateZ(200px);
+    }
+    .cube_face.right {
+      transform: rotateY(90deg) translateZ(200px);
+    }
+    .cube_face.top {
+      transform: rotateX(90deg) translateZ(200px);
+    }
+    .cube_face.bottom {
+      transform: rotateX(-90deg) translateZ(200px);
+    }
+
+    .cube_face.front.s0 {
+      background-image: url("images/1.jpg");
+    }
+    .cube_face.back.s0 {
+      background-image: url("images/1.jpg");
+    }
+    .cube_face.left.s0 {
+      background-image: url("images/1.jpg");
+    }
+    .cube_face.right.s0 {
+      background-image: url("images/1.jpg");
+    }
+    .cube_face.top.s0 {
+      background-image: url("images/1.jpg");
+    }
+    .cube_face.bottom.s0 {
+      background-image: url("images/1.jpg");
+    }
+
+    .cube_face.front.s1 {
+      background-image: url("images/2.jpg");
+    }
+    .cube_face.back.s1 {
+      background-image: url("images/2.jpg");
+    }
+    .cube_face.left.s1 {
+      background-image: url("images/2.jpg");
+    }
+    .cube_face.right.s1 {
+      background-image: url("images/2.jpg");
+    }
+    .cube_face.top.s1 {
+      background-image: url("images/2.jpg");
+    }
+    .cube_face.bottom.s1 {
+      background-image: url("images/2.jpg");
+    }
+
+    .cube_face.front.s2 {
+      background-image: url("images/3.jpg");
+    }
+    .cube_face.back.s2 {
+      background-image: url("images/3.jpg");
+    }
+    .cube_face.left.s2 {
+      background-image: url("images/3.jpg");
+    }
+    .cube_face.right.s2 {
+      background-image: url("images/3.jpg");
+    }
+    .cube_face.top.s2 {
+      background-image: url("images/3.jpg");
+    }
+    .cube_face.bottom.s2 {
+      background-image: url("images/3.jpg");
+    }
+
+    .cube_face.front.s3 {
+      background-image: url("images/4.jpg");
+    }
+    .cube_face.back.s3 {
+      background-image: url("images/4.jpg");
+    }
+    .cube_face.left.s3 {
+      background-image: url("images/4.jpg");
+    }
+    .cube_face.right.s3 {
+      background-image: url("images/4.jpg");
+    }
+    .cube_face.top.s3 {
+      background-image: url("images/4.jpg");
+    }
+    .cube_face.bottom.s3 {
+      background-image: url("images/4.jpg");
+    }
+
+    .cube_face.front.s4 {
+      background-image: url("images/5.jpg");
+    }
+    .cube_face.back.s4 {
+      background-image: url("images/5.jpg");
+    }
+    .cube_face.left.s4 {
+      background-image: url("images/5.jpg");
+    }
+    .cube_face.right.s4 {
+      background-image: url("images/5.jpg");
+    }
+    .cube_face.top.s4 {
+      background-image: url("images/5.jpg");
+    }
+    .cube_face.bottom.s4 {
+      background-image: url("images/5.jpg");
+    }
+
+    .cube_face.front.s5 {
+      background-image: url("images/6.jpg");
+    }
+    .cube_face.back.s5 {
+      background-image: url("images/6.jpg");
+    }
+    .cube_face.left.s5 {
+      background-image: url("images/6.jpg");
+    }
+    .cube_face.right.s5 {
+      background-image: url("images/6.jpg");
+    }
+    .cube_face.top.s5 {
+      background-image: url("images/6.jpg");
+    }
+    .cube_face.bottom.s5 {
+      background-image: url("images/6.jpg");
+    }
+
+    .cube_face.front.s6 {
+      background-image: url("images/7.jpg");
+    }
+    .cube_face.back.s6 {
+      background-image: url("images/7.jpg");
+    }
+    .cube_face.left.s6 {
+      background-image: url("images/7.jpg");
+    }
+    .cube_face.right.s6 {
+      background-image: url("images/7.jpg");
+    }
+    .cube_face.top.s6 {
+      background-image: url("images/7.jpg");
+    }
+    .cube_face.bottom.s6 {
+      background-image: url("images/7.jpg");
+    }
+
+    .cube_face.front.s7 {
+      background-image: url("images/8.jpg");
+    }
+    .cube_face.back.s7 {
+      background-image: url("images/8.jpg");
+    }
+    .cube_face.left.s7 {
+      background-image: url("images/8.jpg");
+    }
+    .cube_face.right.s7 {
+      background-image: url("images/8.jpg");
+    }
+    .cube_face.top.s7 {
+      background-image: url("images/8.jpg");
+    }
+    .cube_face.bottom.s7 {
+      background-image: url("images/8.jpg");
+    }
+  </style>
+  <body>
+    <div class="wrap">
+      <h2 class="fix_tit">
+        <!-- 타이틀 -->
+        <span>HELLO :D</span>
+        <strong>GGANG CODING</strong>
+      </h2>
+      <section id="a" class="ggang_section fixed" style="background-image: url('images/1.jpg')"></section>
+      <section id="b" class="ggang_section" style="background-image: url('images/2.jpg')"></section>
+      <section id="c" class="ggang_section" style="background-image: url('images/3.jpg')"></section>
+      <section id="d" class="ggang_section fixed" style="background-image: url('images/4.jpg')"></section>
+      <section id="e" class="ggang_section" style="background-image: url('images/5.jpg')"></section>
+      <section id="f" class="ggang_section" style="background-image: url('images/6.jpg')"></section>
+      <section id="g" class="ggang_section" style="background-image: url('images/7.jpg')"></section>
+      <section id="h" class="ggang_section" style="background-image: url('images/8.jpg')"></section>
+      <ul class="nav_list">
+        <!-- 네비게이션 -->
+        <li>
+          <a href="#a" class="active">
+            <i class="fa"></i>
+            <span>MUSIC</span>
+          </a>
+        </li>
+        <li>
+          <a href="#b">
+            <i class="fa"></i>
+            <span>LADY</span>
+          </a>
+        </li>
+        <li>
+          <a href="#c">
+            <i class="fa"></i>
+            <span>CITY</span>
+          </a>
+        </li>
+        <li>
+          <a href="#d">
+            <i class="fa"></i>
+            <span>BUILDING</span>
+          </a>
+        </li>
+        <li>
+          <a href="#e">
+            <i class="fa"></i>
+            <span>BLUE SKY</span>
+          </a>
+        </li>
+        <li>
+          <a href="#f">
+            <i class="fa"></i>
+            <span>LONELY</span>
+          </a>
+        </li>
+        <li>
+          <a href="#g">
+            <i class="fa"></i>
+            <span>ELEGANCE</span>
+          </a>
+        </li>
+        <li>
+          <a href="#h">
+            <i class="fa"></i>
+            <span>SPACE</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="cube_wrap">
+        <div class="cube_box">
+          <div class="cube_face front"></div>
+          <div class="cube_face back"></div>
+          <div class="cube_face right"></div>
+          <div class="cube_face left"></div>
+          <div class="cube_face top"></div>
+          <div class="cube_face bottom"></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      window.addEventListener("load", function () {
+        const scrollBodyEl = document.querySelector(".wrap");
+        const sectionEls = document.querySelectorAll(".ggang_section");
+        const navEls = document.querySelectorAll(".nav_list li a");
+        const titleEls = document.querySelectorAll(".nav_list li a span");
+        const fixTitEl = document.querySelector(".fix_tit");
+        const currTitleEl = document.querySelector(".fix_tit strong");
+        const cubeBoxEl = document.querySelector(".cube_box");
+        const cubeFaceEls = document.querySelectorAll(".cube_face");
+        const sectionOffsetTops = [];
+        const sectionOffsetBottoms = [];
+
+        const parallaxDistance = 1100;
+        let winScrollTop;
+        let scrollHeight;
+        let scrollRealHeight;
+        let scrollPercent;
+        let percent;
+        let moveDistance;
+
+        let currIndex = 0;
+
+        function initOffset() {
+          sectionEls.forEach((n) => {
+            sectionOffsetTops.push(window.pageYOffset + n.getBoundingClientRect().top);
+            sectionOffsetBottoms.push(window.pageYOffset + n.getBoundingClientRect().top + n.offsetHeight);
+          });
+        }
+
+        function setProperty() {
+          winScrollTop = window.pageYOffset;
+          scrollHeight = scrollBodyEl.offsetHeight;
+          scrollRealHeight = scrollHeight - window.innerHeight;
+          scrollPercent = winScrollTop / scrollRealHeight;
+          percent = scrollPercent * 100;
+          moveDistance = scrollPercent * parallaxDistance;
+        }
+
+        function setActive(index) {
+          if (currIndex === index) return;
+          currIndex = index;
+          changeMenu();
+          changeTitle();
+          changeColor();
+          changeCubeImage();
+        }
+
+        function changeMenu() {
+          navEls.forEach((n) => n.classList.remove("active"));
+          navEls[currIndex].classList.add("active");
+        }
+
+        function changeTitle() {
+          currTitleEl.innerText = titleEls[currIndex].innerText;
+        }
+
+        function changeColor() {
+          if (currIndex === 1 || currIndex === 2) {
+            fixTitEl.classList.add("black");
+          } else {
+            fixTitEl.classList.remove("black");
+          }
+        }
+
+        function changeCubeImage() {
+          cubeFaceEls.forEach((n) => n.classList.remove("s0"));
+          cubeFaceEls.forEach((n) => n.classList.remove("s1"));
+          cubeFaceEls.forEach((n) => n.classList.remove("s2"));
+          cubeFaceEls.forEach((n) => n.classList.remove("s3"));
+          cubeFaceEls.forEach((n) => n.classList.remove("s4"));
+          cubeFaceEls.forEach((n) => n.classList.remove("s5"));
+          cubeFaceEls.forEach((n) => n.classList.remove("s6"));
+          cubeFaceEls.forEach((n) => n.classList.remove("s7"));
+
+          cubeFaceEls.forEach((n) => n.classList.add(`s${currIndex}`));
+        }
+
+        function parallax() {
+          cubeBoxEl.style.transform = `rotateX(${moveDistance}deg) rotateY(${moveDistance}deg)`;
+        }
+
+        function checkInSection() {
+          if (winScrollTop >= sectionOffsetTops[0] && winScrollTop < sectionOffsetBottoms[0]) {
+            setActive(0);
+          } else if (winScrollTop >= sectionOffsetTops[1] && winScrollTop < sectionOffsetBottoms[1]) {
+            setActive(1);
+          } else if (winScrollTop >= sectionOffsetTops[2] && winScrollTop < sectionOffsetBottoms[2]) {
+            setActive(2);
+          } else if (winScrollTop >= sectionOffsetTops[3] && winScrollTop < sectionOffsetBottoms[3]) {
+            setActive(3);
+          } else if (winScrollTop >= sectionOffsetTops[4] && winScrollTop < sectionOffsetBottoms[4]) {
+            setActive(4);
+          } else if (winScrollTop >= sectionOffsetTops[5] && winScrollTop < sectionOffsetBottoms[5]) {
+            setActive(5);
+          } else if (winScrollTop >= sectionOffsetTops[6] && winScrollTop < sectionOffsetBottoms[6]) {
+            setActive(6);
+          } else if (winScrollTop >= sectionOffsetTops[7] && winScrollTop < sectionOffsetBottoms[7]) {
+            setActive(7);
+          }
+        }
+
+        function render() {
+          setProperty();
+          checkInSection();
+          parallax();
+        }
+
+        window.addEventListener("scroll", function () {
+          render();
+        });
+
+        initOffset();
+        render();
+      });
+    </script>
+  </body>
+</html>
