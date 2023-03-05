@@ -75,9 +75,10 @@ class MoveAndJump {
       const xValue = getTranslateXValue(element);
       if (xValue > this.#jumpStartingXPoint - 200 && xValue <= this.#jumpStartingXPoint) {
         element.style.bottom = `${nextYValue}px`;
-      } else {
+      } else if (xValue <= this.#jumpStartingXPoint - 200) {
         element.style.bottom = `${0}px`;
         cancelAnimationFrame(jumpReq);
+        return;
       }
 
       jumpReq = requestAnimationFrame(jump);
