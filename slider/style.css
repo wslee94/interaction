@@ -1,0 +1,229 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+main {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+}
+main section {
+  width: 100%;
+  overflow: hidden;
+}
+main ul {
+  display: flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  transition-property: transform;
+  transition-timing-function: linear;
+}
+main ul li {
+  padding: 10px;
+  max-width: 20%;
+  min-width: 20%;
+  flex-shrink: 0;
+}
+main ul li .wrapper {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 3px 3px 10px #000;
+  transition: transform 0.25s linear;
+}
+main ul li .wrapper:hover {
+  transform: scale(1.03);
+}
+main ul li .wrapper .img {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+}
+main ul li .wrapper .img img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+main ul li .wrapper .content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(148, 2, 2);
+  height: 10vw;
+  font-size: 3vw;
+  color: #fff;
+}
+main .btns {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+main .btns button {
+  padding: 10px;
+}
+
+@media screen and (max-width: 1000px) {
+  main ul li {
+    max-width: 25%;
+    min-width: 25%;
+  }
+}
+@media screen and (max-width: 800px) {
+  main ul li {
+    max-width: 33.33%;
+    min-width: 33.33%;
+  }
+}
+@media screen and (max-width: 600px) {
+  main ul li {
+    max-width: 50%;
+    min-width: 50%;
+  }
+}
+@media screen and (max-width: 400px) {
+  main ul li {
+    max-width: 100%;
+    min-width: 100%;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */
