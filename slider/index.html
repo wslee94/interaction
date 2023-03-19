@@ -5,7 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <script defer src="main.js"></script>
+    <script type="module" defer src="main.js"></script>
+    <script type="module" defer>
+      import Slider from "./main.js";
+
+      const data = [
+        { image: "https://via.placeholder.com/640x480", text: 1 },
+        { image: "https://via.placeholder.com/640x480", text: 2 },
+        { image: "https://via.placeholder.com/640x480", text: 3 },
+        { image: "https://via.placeholder.com/640x480", text: 4 },
+        { image: "https://via.placeholder.com/640x480", text: 5 },
+        { image: "https://via.placeholder.com/640x480", text: 6 },
+        { image: "https://via.placeholder.com/640x480", text: 7 },
+        { image: "https://via.placeholder.com/640x480", text: 8 },
+        { image: "https://via.placeholder.com/640x480", text: 9 },
+        { image: "https://via.placeholder.com/640x480", text: 10 },
+        { image: "https://via.placeholder.com/640x480", text: 11 },
+        { image: "https://via.placeholder.com/640x480", text: 12 },
+        { image: "https://via.placeholder.com/640x480", text: 13 },
+      ];
+
+      const container = document.querySelector("ul");
+      const slider = new Slider(container, {
+        data,
+        speed: 500,
+        responsive: [
+          { condition: (innerWidth) => innerWidth > 1000, bundleSize: 5 },
+          { condition: (innerWidth) => innerWidth > 800 && innerWidth <= 1000, bundleSize: 4 },
+          { condition: (innerWidth) => innerWidth > 600 && innerWidth <= 800, bundleSize: 3 },
+          { condition: (innerWidth) => innerWidth > 400 && innerWidth <= 600, bundleSize: 2 },
+          { condition: (innerWidth) => innerWidth <= 400, bundleSize: 1 },
+        ],
+      });
+
+      const [prevBtn, nextBtn] = document.querySelectorAll(".btns button");
+      prevBtn.addEventListener("click", () => slider.prev());
+      nextBtn.addEventListener("click", () => slider.next());
+    </script>
     <title>Document</title>
   </head>
   <body>
